@@ -188,7 +188,7 @@ public class Water {
     private static String getValidJs() {
     	String result = "";
     	try {
-	    	String jspath = "/Users/space/Desktop/AA_HeadlessReports/heatmaplitejswithdata.js";
+	    	String jspath = "/Users/space/Desktop/AA_HeadlessReports/bundle.js";
 	    	FileInputStream fis = new FileInputStream(jspath);
 	        InputStreamReader isr = new InputStreamReader(fis);
 	        BufferedReader br = new BufferedReader(isr);

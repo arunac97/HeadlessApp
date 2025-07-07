@@ -1,26 +1,38 @@
-===============================================
- Headless Chrome PDF Generator - Java Edition
-===============================================
 
-This project automates a headless Chrome session using Java and WebSockets
-to load a web page, inject custom JavaScript (bundle.js), and save the result
-as a PDF file.
+# 💻 Headless Chrome PDF Generator (Java + WebSocket)
 
----------------------
-  REQUIREMENTS
----------------------
-- Java 8 or higher
+This project demonstrates how to automate a headless Google Chrome instance using **Java + WebSocket** to:
+
+- Load a web page
+- Inject a custom JavaScript file (`bundle.js`)
+- Export the final rendered page as a **PDF**
+
+---
+
+## 🧰 Requirements
+
+- Java 8 or later
 - Google Chrome installed
-- bundle.js file (your custom JavaScript)
-- Terminal/command-line access
+- A terminal or command line interface
+- `bundle.js` (JavaScript code to modify the page)
 
----------------------
-  STEP 1: START CHROME
----------------------
-Start a headless Chrome instance with remote debugging enabled.
+---
 
-Paste the following in your terminal (single line or backslash-separated):
+## 🚀 Quick Start
 
+### 1. Launch Headless Chrome with Remote Debugging
+
+To use the Chrome DevTools Protocol, start Chrome with debugging enabled.
+
+#### For **macOS/Linux**:
+
+```bash
+chrome --remote-debugging-port=9222   --remote-debugging-address=127.0.0.1   --headless   --use-gl=angle   --use-angle=swiftshader-webgl   --hide-scrollbars   --disable-translate   --disable-extensions   --disable-background-networking   --mute-audio   --no-first-run   --allow-http-screen-capture   --allow-running-insecure-content   --unsafely-treat-insecure-origin-as-secure   --allow-external-pages   --disable-offline-auto-reload-visible-only   --disable-overscroll-edge-effect   --no-default-browser-check   --disable-plugin-power-saver   --disable-background-timer-throttling   --disable-client-side-phishing-detection   --disable-default-apps   --disable-hang-monitor   --disable-popup-blocking   --disable-prompt-on-repost   --disable-sync   --metrics-recording-only   --safebrowsing-disable-auto-update   --ignore-certificate-errors   --disable-machine-cert-request   --ignore-certificate-errors-spki-list   --ignore-urlfetcher-cert-requests   --remote-allow-origins=http://127.0.0.1:9222
+```
+
+#### For **Windows PowerShell**:
+
+```powershell
 chrome --remote-debugging-port=9222 ^
   --remote-debugging-address=127.0.0.1 ^
   --headless ^
@@ -54,71 +66,67 @@ chrome --remote-debugging-port=9222 ^
   --ignore-certificate-errors-spki-list ^
   --ignore-urlfetcher-cert-requests ^
   --remote-allow-origins=http://127.0.0.1:9222
+```
 
-(Note: use "\" instead of "^" if you're on Unix/Linux/Mac.)
+---
 
-----------------------------
-  STEP 2: SET UP WORKSPACE
-----------------------------
+## 📁 Project Structure
 
-Create the following folder structure:
-
+```
 your-project/
-├── bundle.js
+├── bundle.js                        # Custom JavaScript to inject
 └── src/
-    ├── Water.java
-    └── ChromeWebSocketListener.java
+    ├── Water.java                   # Main logic to control Chrome and generate PDF
+    └── ChromeWebSocketListener.java# WebSocket message handler
+```
 
-Make sure `bundle.js` is in the correct location.
+---
 
-----------------------------------
-  STEP 3: GET WEBSOCKET DEBUG URL
-----------------------------------
+## 🔌 Update the WebSocket Debugger URL
 
-1. Open this URL in your browser:
-   http://127.0.0.1:9222/json
+1. Visit this URL in your browser:  
+   [http://127.0.0.1:9222/json](http://127.0.0.1:9222/json)
 
-2. Find the line that looks like:
-   "webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/XXXXXXXXXXXX"
+2. Look for the field: `"webSocketDebuggerUrl"`  
+   Example:  
+   `"webSocketDebuggerUrl": "ws://127.0.0.1:9222/devtools/page/ABC123"`
 
-3. Copy that URL.
+3. Copy the full WebSocket URL and paste it into the `Water.java` file:
 
-4. Open Water.java and replace the WebSocket URL with the one you copied:
+```java
+String debugUrl = "ws://127.0.0.1:9222/devtools/page/ABC123";
+```
 
-   Example:
-   String debugUrl = "ws://127.0.0.1:9222/devtools/page/XXXXXXXXXXXX";
+---
 
---------------------------
-  STEP 4: RUN THE PROGRAM
---------------------------
+## ▶️ Build & Run
 
-Compile and run:
+From the root of your project directory, compile and run the Java files:
 
+```bash
 javac -d out src/*.java
 java -cp out Water
+```
 
----------------------------
-  OUTPUT
----------------------------
+---
 
-The program will:
-1. Open the target webpage
-2. Inject bundle.js
-3. Save the final rendered page as a PDF
+## 📄 Output
 
-The output PDF will be saved to your working directory.
+- Chrome opens the target page in headless mode.
+- Injects your `bundle.js` to manipulate the DOM or behavior.
+- Saves the final rendered page as a PDF to your current directory.
 
----------------------------
-  LICENSE
----------------------------
+---
 
-MIT License. Use freely and modify as needed.
+## 💡 Notes
 
----------------------------
-  NOTES
----------------------------
+- Make sure the Chrome process is running before executing `Water.java`.
+- You can modify `bundle.js` to alter page styles, add content, or delay rendering.
+- You may automate PDF naming, folder output, or target URLs within the Java code.
 
-- Ensure Chrome is running with the correct flags before launching the Java program.
-- You can edit bundle.js to change what is injected into the page.
-- For automation or bulk processing, consider scripting WebSocket URL discovery.
+---
 
+## 📝 License
+
+This project is licensed under the MIT License.  
+See `LICENSE` file for more information.
